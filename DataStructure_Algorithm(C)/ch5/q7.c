@@ -1,57 +1,73 @@
-/*5-3. ÇÏ³ëÀÌÀÇ Å¾*/
-// Q7. ÇÏ³ëÀÌÀÇ Å¾ ¹®Á¦¿¡¼­ moveÇÔ¼ö¸¦ ºñÀç±ÍÀûÀ¸·Î ¼öÁ¤
+/*5-3. í•˜ë…¸ì´ì˜ íƒ‘*/
+// Q7. í•˜ë…¸ì´ì˜ íƒ‘ í•¨ìˆ˜ë¥¼ ë¹„ì¬ê·€ì ìœ¼ë¡œ ë³€ê²½
+/*
+void move(int no, int x, int y) {
+	if (no > 1) move(no - 1, x, 6 - x - y);
+	printf("ì›ë°˜[%d]ë¥¼ %d ê¸°ë‘¥ì—ì„œ %d ê¸°ë‘¥ìœ¼ë¡œ ì´ë™\n", no, x, y);
+	if (no > 1) move(no - 1, 6 - x - y, x);
+}
+*/
+
+
 
 #include <stdio.h>
 #include "IntStack.h"
 
-void move(int no, int x, int y) {
+
+void move(int no, int x, int y)
+{
 	int sw = 0;
-	IntStack xstk, ystk, sstk;		/* ½ºÅÃ */
-	
+	IntStack xstk, ystk, sstk;		/* ìŠ¤íƒ */
+
 	Initialize(&xstk, 100);
 	Initialize(&ystk, 100);
 	Initialize(&sstk, 100);
-	
+
 	while (1) {
 		if (sw == 0 && no > 1) {
-			Push(&xstk, x);				/* x °ªÀ» Çª½Ã */
-			Push(&ystk, y);				/* y °ªÀ» Çª½Ã */
-			Push(&sstk, sw);			/* sw °ªÀ» Çª½Ã */
+			Push(&xstk, x);				/* x ê°’ì„ í‘¸ì‹œ */
+			Push(&ystk, y);				/* y ê°’ì„ í‘¸ì‹œ */
+			Push(&sstk, sw);			/* sw ê°’ì„ í‘¸ì‹œ */
 			no = no - 1;
 			y = 6 - x - y;
 			continue;
 		}
-	
-		printf("¿ø¹İ[%d]¸¦ %d ±âµÕ¿¡¼­ %d ±âµÕÀ¸·Î ÀÌµ¿\n", no, x, y);
-	
+
+		printf("ì›ë°˜[%d]ë¥¼ %d ê¸°ë‘¥ì—ì„œ %d ê¸°ë‘¥ìœ¼ë¡œ ì´ë™\n", no, x, y);
+
 		if (sw == 1 && no > 1) {
-			Push(&xstk, x);				/* x °ªÀ» Çª½Ã */
-			Push(&ystk, y);				/* y °ªÀ» Çª½Ã */
-			Push(&sstk, sw);			/* sw °ªÀ» Çª½Ã */
+			Push(&xstk, x);				/* x ê°’ì„ í‘¸ì‹œ */
+			Push(&ystk, y);				/* y ê°’ì„ í‘¸ì‹œ */
+			Push(&sstk, sw);			/* sw ê°’ì„ í‘¸ì‹œ */
 			no = no - 1;
 			x = 6 - x - y;
 			if (++sw == 2) sw = 0;
 			continue;
 		}
 		do {
-			if (IsEmpty(&xstk))			/* ½ºÅÃÀÌ ºñ¾îÀÖ´Â »óÅÂ¶ó¸é */
+			if (IsEmpty(&xstk))			/* ìŠ¤íƒì´ ë¹„ì–´ìˆëŠ” ìƒíƒœë¼ë©´ */
 				return;
-			Pop(&xstk, &x);				/* x¸¦ ÆË */
-			Pop(&ystk, &y);				/* y¸¦ ÆË */
-			Pop(&sstk, &sw);			/* sw¸¦ ÆË */
+			Pop(&xstk, &x);				/* xë¥¼ íŒ */
+			Pop(&ystk, &y);				/* yë¥¼ íŒ */
+			Pop(&sstk, &sw);			/* swë¥¼ íŒ */
 			sw++;
 			no++;
 		} while (sw == 2);
 	}
-	
+
 	Terminate(&xstk);
 	Terminate(&ystk);
 	Terminate(&sstk);
 }
 
-int main() {
+int main(void)
+{
 	int n;
-	printf("ÇÏ³ëÀÌ Å¾\n¿ø¹İ°³¼ö: ");
-	scanf_s("%d", &n);
+
+	printf("í•˜ë…¸ì´ íƒ‘\nì›ë°˜ ê°œìˆ˜ : ");
+	scanf("%d", &n);
+
 	move(n, 1, 3);
+
+	return 0;
 }
